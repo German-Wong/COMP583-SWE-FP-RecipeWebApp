@@ -5,8 +5,31 @@
 package com.mycompany.recipeprofile;
 
 /**
- *
- * @author flores
+ @author flores
+    Test Case: 1
+
+        Profile creation with weak password. The system should display an error message indicating that the password does not meet the required strength criteria.
+
+    Class of Equivalence Partition:
+
+        Weak passwords (e.g., fewer than 8 characters, common passwords).
+
+    Boundary:
+
+        Passwords at the minimum acceptable length.
+
+    Test Case: 2
+
+        Profile creation with no numeric or special characters(Name/Last Name). Verify that no special characters are in the name or last name field. Should prompt for a message
+
+    Class of Equivalence Partition:
+
+        Invalid input data, numerical or special characters on name or last name.
+
+    Boundary:
+
+        Special characters at any part of the fields specified.
+
  */
 import java.util.Scanner;
 import java.util.HashMap;
@@ -24,9 +47,10 @@ public class Profile {
     
     Map<String, String[]> accounts = new HashMap<>();
     
-    
+     //I made a basic login function that allows a user to choose between Create Account and Login
     
     public void Login(){
+        //I put some hardcoded accounts already to test the login in function and to use as a common password
         accounts.put("user1", new String[]{"John", "Doe", "password1"});
         accounts.put("user2", new String[]{"Jane", "Smith", "password2"});
         int x=0;
@@ -54,7 +78,7 @@ public class Profile {
     
     public void Creation(){
        
-        
+            //Here the user would input their username, name, last name, and password
             System.out.println("\nSign Up");
             System.out.println("Enter Username: ");
             Username = user.nextLine();
@@ -72,6 +96,7 @@ public class Profile {
                 isValid = true;
                 } 
             else {
+                 //The prompt saying that the password they inputed is not valid
                 System.out.println("Invalid password. Password should have at least 8 characters and not be a common password.");
                     }
             if(isValidName(Name,LastName)){
@@ -79,6 +104,7 @@ public class Profile {
                
                 }
             else{
+                //The prompt saying that what they put under their name/last name is not valid and contains a special character
                 System.out.println("Invalid Name/Last Name. Special Characters are not allowed in Name or Last Name");
                 System.out.println("\nEnter name: ");
                 Name = user.nextLine();
@@ -89,13 +115,16 @@ public class Profile {
             }
             
         
- 
+            //saves newly created account so you can try to sign in again and it will work
+
+
             accounts.put(Username,new String []{Name, LastName, password});
             
     
     }
     
     public void SignIn(){
+        //This is the sign in function
         System.out.println("\nSign In");
         System.out.println("Please enter your Username:");
         String signInUsername = user.nextLine();
@@ -113,13 +142,17 @@ public class Profile {
         }
     }
     
+    //This method checks if the password is valid by checking if it is long enough which the minimum is 8 characters long
     public static boolean isValid(String password){
         return password.length()>= 8 && !isCommonPassword(password);
     }
     
+    //This method checks if the password is common. I defined common as a password that is already used/in the system since putting a method to get all common passwords would take too long
     public static boolean isCommonPassword(String password){
         return password.equals("password1")||password.equals("password2");
     }
+    
+    //This method checks if the name/last name is valid and does not have any special characters
     public static boolean isValidName(String name,String lastname){
         if(name.matches(regex)|| lastname.matches(regex)){
             return false;
